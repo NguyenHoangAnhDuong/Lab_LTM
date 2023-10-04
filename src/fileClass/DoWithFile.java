@@ -2,6 +2,8 @@ package fileClass;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DoWithFile {
 	public void createFile(String path) {
@@ -70,10 +72,49 @@ public class DoWithFile {
 				}
 			}
 
-		} 
-		else {
-			DoWithFile withFile = new DoWithFile();
-			withFile.removeFolder(path);
+		} else {
+			removeFolder(path);
+		}
+	}
+
+	public void findAll(String path, String... exts) {
+		File myFolder = new File(path);
+		if (myFolder.isDirectory()) {
+			if (myFolder.listFiles() != null) {
+				for (File file : myFolder.listFiles()) {
+					for (String ext : exts) {
+						if (file.getAbsolutePath().endsWith("." + ext)) {
+							System.out.println(file.getAbsolutePath());
+						}
+					}
+				}
+			} else {
+				System.out.println(path + "is null");
+			}
+
+		} else {
+			System.out.println(path + " is illegal");
+		}
+	}
+
+	public void deleteAll(String path, String... exts) {
+		File myFolder = new File(path);
+		if (myFolder.isDirectory()) {
+			if (myFolder.listFiles() != null) {
+				for (File file : myFolder.listFiles()) {
+					for (String ext : exts) {
+						if (file.getAbsolutePath().endsWith("." + ext)) {
+							file.delete();
+							System.out.println("All File are deleted");
+						}
+					}
+				}
+			} else {
+				System.out.println(path + "is null");
+			}
+
+		} else {
+			System.out.println(path + " is illegal");
 		}
 	}
 
@@ -97,6 +138,9 @@ public class DoWithFile {
 //		test.createFile("E:\\Lab_LTMang\\root\\file2.docx");
 //		test.createFile("E:\\Lab_LTMang\\root\\file3.docx");
 //		test.removeFolder("E:\\Lab_LTMang\\root");
-		test.removePlus("E:\\Lab_LTMang\\root",false);
+//		test.removePlus("E:\\Lab_LTMang\\root", false);
+		String[] exts = { "jpg", "docx" };
+		test.findAll("E:\\Lab_LTMang\\root", exts);
+		test.deleteAll("E:\\Lab_LTMang\\root", exts);
 	}
 }
